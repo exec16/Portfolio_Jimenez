@@ -1,7 +1,7 @@
 # Adrian V. Jimenez — IT Portfolio
 
 ## Live Site
-[https://exec16.github.io/Portfolio_Jimenez/](https://exec16.github.io/Portfolio_Jimenez/)
+
 
 ## About
 IT student at Bataan Heroes College. ABM graduate turned programmer. Competed nationally in robotics. Built LAN-based attendance systems. Cisco certified.
