@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adrian V. Jimenez — IT Student | Bataan Heroes College</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #CC0000;
+    --red-bright: #e60000;
+    --red-dim: #7a0000;
+    --black: #0a0a0a;
+    --dark: #111111;
+    --card: #161616;
+    --card-border: #242424;
+    --white: #f0f0f0;
+    --gray: #888888;
+    --gray-light: #bbbbbb;
+    --mono: 'JetBrains Mono', monospace;
+    --display: 'Barlow Condensed', sans-serif;
+    --body: 'Barlow', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--black);
+    color: var(--white);
+    font-family: var(--body);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ─── NOISE TEXTURE OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.4;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2.5rem;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--card-border);
+  }
+
+  .nav-logo {
+    font-family: var(--display);
+    font-size: 1.3rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--white);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--red); }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gray);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--red); }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 8rem 2.5rem 5rem;
+    overflow: hidden;
+  }
+
+  /* Large diagonal background element */
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: -10%;
+    right: -5%;
+    width: 55%;
+    height: 120%;
+    background: linear-gradient(135deg, var(--red-dim) 0%, transparent 70%);
+    opacity: 0.12;
+    transform: skewX(-8deg);
+    pointer-events: none;
+  }
+
+  /* Vertical red accent line */
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    width: 100%;
+    padding-left: 2rem;
+    border-left: 3px solid var(--red);
+  }
+
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-name {
+    font-family: var(--display);
+    font-size: clamp(3.5rem, 9vw, 8rem);
+    font-weight: 900;
+    line-height: 0.92;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-name .last { color: var(--red); }
+
+  .hero-title {
+    font-family: var(--body);
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    font-weight: 300;
+    color: var(--gray-light);
+    letter-spacing: 0.04em;
+    margin-bottom: 2rem;
+  }
+
+  .hero-tagline {
+    font-family: var(--display);
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--white);
+    opacity: 0.55;
+    text-transform: uppercase;
+  }
+
+  .hero-tagline span {
+    display: inline-block;
+    margin: 0 0.3em;
+    color: var(--red);
+    opacity: 1;
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--gray);
+    text-align: center;
+  }
+
+  .hero-scroll::before {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 40px;
+    background: var(--red);
+    margin: 0 auto 0.75rem;
+    opacity: 0.6;
+  }
+
+  /* ─── SECTION COMMONS ─── */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 5rem 2.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 0.5rem;
+  }
+
+  .section-title {
+    font-family: var(--display);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--white);
+    margin-bottom: 3rem;
+    line-height: 1;
+  }
+
+  .section-divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, var(--red), transparent);
+    margin-bottom: 3rem;
+    opacity: 0.4;
+  }
+
+  /* ─── ABOUT ─── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .about-text p {
+    font-size: 1.05rem;
+    font-weight: 300;
+    color: var(--gray-light);
+    margin-bottom: 1.25rem;
+    line-height: 1.75;
+  }
+
+  .about-text p strong {
+    color: var(--white);
+    font-weight: 600;
+  }
+
+  .about-text p .accent {
+    color: var(--red);
+    font-weight: 600;
+  }
+
+  .about-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .stat-block {
+    border: 1px solid var(--card-border);
+    border-left: 3px solid var(--red);
+    background: var(--card);
+    padding: 1.25rem 1.5rem;
+  }
+
+  .stat-num {
+    font-family: var(--display);
+    font-size: 2.8rem;
+    font-weight: 900;
+    color: var(--red);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-top: 0.3rem;
+  }
+
+  /* ─── SKILLS ─── */
+  .skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .skill-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    padding: 0.7rem 1.25rem;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--gray-light);
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .skill-badge:hover {
+    border-color: var(--red);
+    color: var(--white);
+  }
+
+  .skill-badge::before {
+    content: '//';
+    color: var(--red);
+    font-size: 0.75rem;
+  }
+
+  /* ─── PROJECTS ─── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--red);
+  }
+
+  .project-card:hover {
+    border-color: #333;
+  }
+
+  .project-num {
+    font-family: var(--display);
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--card-border);
+    line-height: 1;
+    margin-bottom: 0.75rem;
+  }
+
+  .project-name {
+    font-family: var(--display);
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--white);
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+  }
+
+  .project-role {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 1rem;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 1rem;
+  }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    background: rgba(204,0,0,0.1);
+    color: var(--red);
+    padding: 0.25rem 0.6rem;
+    border: 1px solid rgba(204,0,0,0.25);
+  }
+
+  .project-note {
+    font-size: 0.82rem;
+    color: var(--gray);
+    font-style: italic;
+    margin-top: 0.75rem;
+  }
+
+  /* ─── COMPETITIONS ─── */
+  .comp-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .comp-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .comp-card:hover { border-color: #333; }
+
+  .comp-header {
+    background: linear-gradient(135deg, #1a0000, #1a1a1a);
+    padding: 1.75rem 2rem;
+    border-bottom: 1px solid var(--card-border);
+    position: relative;
+  }
+
+  .comp-icon {
+    font-family: var(--display);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 0.5rem;
+  }
+
+  .comp-name {
+    font-family: var(--display);
+    font-size: 1.5rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.1;
+    color: var(--white);
+  }
+
+  .comp-body {
+    padding: 1.5rem 2rem;
+  }
+
+  .comp-detail {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--gray-light);
+  }
+
+  .comp-detail .dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--red);
+    flex-shrink: 0;
+    margin-top: 0.4rem;
+  }
+
+  /* ─── PLACEHOLDER MEDIA ─── */
+  .media-placeholder {
+    background: #1a1a1a;
+    border: 1px dashed #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 2rem 1rem;
+    margin-top: 1.25rem;
+  }
+
+  .media-placeholder .ph-icon {
+    font-family: var(--mono);
+    font-size: 1.5rem;
+    color: #333;
+  }
+
+  .media-placeholder .ph-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #444;
+  }
+
+  /* ─── CERTIFICATIONS ─── */
+  .cert-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .cert-item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.5rem;
+    align-items: center;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-left: 3px solid var(--red);
+    padding: 1.5rem 2rem;
+  }
+
+  .cert-badge {
+    width: 48px;
+    height: 48px;
+    border: 2px solid var(--red);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--display);
+    font-size: 1.1rem;
+    font-weight: 900;
+    color: var(--red);
+    flex-shrink: 0;
+  }
+
+  .cert-name {
+    font-family: var(--display);
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--white);
+  }
+
+  .cert-sub {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-top: 0.2rem;
+  }
+
+  .cert-photo-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  /* ─── CONTACT / FOOTER ─── */
+  footer {
+    position: relative;
+    z-index: 1;
+    background: var(--dark);
+    border-top: 1px solid var(--card-border);
+    padding: 4rem 2.5rem;
+    text-align: center;
+  }
+
+  .footer-inner {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .footer-name {
+    font-family: var(--display);
+    font-size: 2.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-name span { color: var(--red); }
+
+  .footer-sub {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 2.5rem;
+  }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+  }
+
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid var(--card-border);
+    padding: 0.75rem 1.5rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gray-light);
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
+
+  .contact-link:hover {
+    border-color: var(--red);
+    color: var(--white);
+    background: rgba(204,0,0,0.08);
+  }
+
+  .footer-wip {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    color: #444;
+    padding: 0.5rem 1rem;
+    border: 1px dashed #2a2a2a;
+    display: inline-block;
+    margin-bottom: 2rem;
+  }
+
+  .footer-copy {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    color: #333;
+  }
+
+  /* ─── BATAAN BANNER ─── */
+  .bataan-banner {
+    background: linear-gradient(135deg, #0d0000 0%, #1a0000 100%);
+    border: 1px solid rgba(204,0,0,0.2);
+    border-left: 4px solid var(--red);
+    padding: 1.5rem 2rem;
+    margin-bottom: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .bataan-text {
+    font-family: var(--display);
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--white);
+  }
+
+  .bataan-sub {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-top: 0.2rem;
+  }
+
+  /* ─── HIGHLIGHT BOX ─── */
+  .highlight {
+    background: rgba(204,0,0,0.06);
+    border: 1px solid rgba(204,0,0,0.2);
+    border-left: 3px solid var(--red);
+    padding: 1rem 1.25rem;
+    font-size: 0.9rem;
+    color: var(--gray-light);
+    margin-top: 1rem;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.25rem; }
+    .nav-links { gap: 1.2rem; }
+    .nav-links a { font-size: 0.62rem; }
+
+    .hero { padding: 7rem 1.25rem 4rem; }
+    .hero-inner { padding-left: 1.25rem; }
+    .hero::after { display: none; }
+
+    section { padding: 4rem 1.25rem; }
+
+    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .comp-grid { grid-template-columns: 1fr; }
+
+    .cert-item { grid-template-columns: 1fr; gap: 1rem; }
+    .cert-photo-row { grid-template-columns: 1fr; }
+
+    .contact-links { flex-direction: column; align-items: center; }
+  }
+
+  @media (max-width: 480px) {
+    .nav-links { display: none; }
+    .hero-name { font-size: 3rem; }
+    .hero-tagline { font-size: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav>
+  <a href="#hero" class="nav-logo">A<span>.</span>V<span>.</span>J</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#competitions">Achievements</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ─── HERO ─── -->
+<div id="hero" class="hero">
+  <div class="hero-inner">
+    <p class="hero-eyebrow">// Portfolio — Bataan Heroes College — IT Student</p>
+    <h1 class="hero-name">
+      Adrian V.<br><span class="last">Jimenez</span>
+    </h1>
+    <p class="hero-title">IT Student &nbsp;|&nbsp; Bataan Heroes College &nbsp;|&nbsp; ABM Graduate</p>
+    <p class="hero-tagline">
+      ABM Graduate<span>·</span>IT Student<span>·</span>Competitor<span>·</span>Builder
+    </p>
+  </div>
+  <div class="hero-scroll">SCROLL</div>
+</div>
+
+<!-- ─── ABOUT ─── -->
+<section id="about">
+  <p class="section-label">// 01 — About</p>
+  <h2 class="section-title">Who I Am</h2>
+  <div class="section-divider"></div>
+
+  <div class="bataan-banner">
+    <div>
+      <p class="bataan-text">Province of Bataan</p>
+      <p class="bataan-sub">Araw ng Kagitingan — Province of Valor</p>
+    </div>
+  </div>
+
+  <div class="about-grid">
+    <div class="about-text">
+      <p>
+        I started in <strong>Accountancy, Business, and Management</strong> — learning the discipline of structured thinking, analysis, and leadership. Then I made the pivot: <span class="accent">programming, databases, and networks</span>.
+      </p>
+      <p>
+        Now I'm pursuing <strong>Information Technology at Bataan Heroes College</strong>, building systems from scratch, competing nationally, and proving that a track switch doesn't mean starting from zero — it means carrying everything you learned into a new arena.
+      </p>
+      <p>
+        I am from <strong>Bataan</strong> — the land of Araw ng Kagitingan, where valor isn't just history, it's expectation. That context shapes how I work: with grit, with purpose, and without making excuses.
+      </p>
+    </div>
+
+    <div class="about-stats">
+      <div class="stat-block">
+        <div class="stat-num">2</div>
+        <div class="stat-label">Academic Tracks Mastered</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-num">5th</div>
+        <div class="stat-label">Collegiate History Quiz Bee — National Araw ng Kagitingan</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-num">R3</div>
+        <div class="stat-label">Region III Representative — NASA/JAXA Kibo Challenge</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SKILLS ─── -->
+<section id="skills">
+  <p class="section-label">// 02 — Skills</p>
+  <h2 class="section-title">Tech Stack + Strengths</h2>
+  <div class="section-divider"></div>
+
+  <div class="skills-grid">
+    <div class="skill-badge">Java</div>
+    <div class="skill-badge">Visual Basic</div>
+    <div class="skill-badge">SQL / MS Access</div>
+    <div class="skill-badge">Basic Networking</div>
+    <div class="skill-badge">Database Design</div>
+    <div class="skill-badge">LAN Setup</div>
+    <div class="skill-badge">Leadership</div>
+    <div class="skill-badge">Charisma</div>
+    <div class="skill-badge">Systems Thinking</div>
+    <div class="skill-badge">Team Coordination</div>
+  </div>
+</section>
+
+<!-- ─── PROJECTS ─── -->
+<section id="projects">
+  <p class="section-label">// 03 — Projects</p>
+  <h2 class="section-title">What I've Built</h2>
+  <div class="section-divider"></div>
+
+  <div class="projects-grid">
+
+    <!-- Project 1 -->
+    <div class="project-card">
+      <div class="project-num">01</div>
+      <h3 class="project-name">LAN-Based Attendance Monitoring System</h3>
+      <p class="project-role">&#9654; Lead Programmer</p>
+      <p style="font-size:0.92rem; color:var(--gray-light); font-weight:300;">
+        A fully integrated attendance system operating over a local area network. Combines live data entry, database storage, and networked retrieval into a single cohesive solution.
+      </p>
+      <img src="./Stuff I put on my website/LAN-BASED_GITHUB.png" style="width: 100%; height: auto; margin-top: 1rem; border: 1px solid var(--card-border);" alt="LAN-Based Attendance System">
+      <div class="project-tags">
+        <span class="tag">Coding</span>
+        <span class="tag">Database</span>
+        <span class="tag">Networking</span>
+        <span class="tag">LAN</span>
+      </div>
+    </div>
+
+    <!-- Project 2 -->
+    <div class="project-card">
+      <div class="project-num">02</div>
+      <h3 class="project-name">Periodic Table — VB + MS Access Database</h3>
+      <p class="project-role">&#9654; Developer</p>
+      <p style="font-size:0.92rem; color:var(--gray-light); font-weight:300;">
+        An interactive periodic table application built in Visual Basic with a live MS Access database backend. Queries and displays element data dynamically.
+      </p>
+      <img src="./Stuff I put on my website/Table of Elements.png" style="width: 100%; height: auto; margin-top: 1rem; border: 1px solid var(--card-border);" alt="Periodic Table Application">
+      <div class="project-tags">
+        <span class="tag">Visual Basic</span>
+        <span class="tag">MS Access</span>
+        <span class="tag">Database</span>
+      </div>
+      <p class="project-note"></p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── COMPETITIONS ─── -->
+<section id="competitions">
+  <p class="section-label">// 04 — Competitions & Achievements</p>
+  <h2 class="section-title">On the Record</h2>
+  <div class="section-divider"></div>
+
+  <div class="comp-grid">
+
+    <!-- 2-Column Layout: Video/JAXA + Quiz Bee -->
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2.5rem; margin-bottom: 2.5rem; grid-column: 1 / -1;">
+      
+      <!-- Left Box: NASA/JAXA Video & Article -->
+      <div style="border: 1px solid var(--card-border); border-radius: 0.5rem; padding: 2.5rem; background-color: var(--card);">
+        <p class="comp-icon" style="margin-bottom: 1rem; font-size: 0.85rem; letter-spacing: 0.1em;">★ NATIONAL ROBOTICS COMPETITION</p>
+        <h3 style="font-family: var(--display); font-size: 1.6rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--white); line-height: 1.3;">NASA/JAXA Kibo Robot Programming Challenge</h3>
+        <div style="font-size: 1.1rem; color: var(--gray-light); margin-bottom: 1.5rem; line-height: 1.8;">
+          <div style="margin-bottom: 0.75rem;"><span style="color: var(--red);">▸</span> Team: <strong>Kernel Panic</strong></div>
+          <div style="margin-bottom: 0.75rem;"><span style="color: var(--red);">▸</span> Region III Representative</div>
+          <div><span style="color: var(--red);">▸</span> Competed at the national level</div>
+        </div>
+        <video style="width: 100%; height: auto; margin-bottom: 1.5rem; border: 1px solid var(--card-border); border-radius: 0.25rem;" controls>
+          <source src="./Stuff I put on my website/kibolilshit.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <img src="./Stuff I put on my website/JAXA.jpg" style="width: 100%; height: auto; margin-bottom: 1.5rem; border: 1px solid var(--card-border); border-radius: 0.25rem;" alt="NASA/JAXA Competition">
+        <p style="font-size: 1.1rem;"><a href="https://philsa.gov.ph/news/philippines-advances-to-the-final-round-of-the-6th-kibo-rpc/" target="_blank" style="color: var(--red); text-decoration: none; border-bottom: 1px solid var(--red);"> Read the news article →</a></p>
+         <p style="font-size: 1.1rem;"><a href="https://www.facebook.com/100064908363188/posts/1186915203482081/" target="_blank" style="color: var(--red); text-decoration: none; border-bottom: 1px solid var(--red);"> View on Facebook →</a></p>
+      </div>
+
+      <!-- Right Box: Quiz Bee -->
+      <div style="border: 1px solid var(--card-border); border-radius: 0.5rem; padding: 2.5rem; background-color: var(--card);">
+        <p class="comp-icon" style="margin-bottom: 1rem; font-size: 0.85rem; letter-spacing: 0.1em;">★ COLLEGIATE HISTORY COMPETITION</p>
+        <h3 style="font-family: var(--display); font-size: 1.6rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--white); line-height: 1.3;">Bataan History Quiz Bee</h3>
+        <div style="font-size: 1.1rem; color: var(--gray-light); margin-bottom: 1.5rem; line-height: 1.8;">
+          <div style="margin-bottom: 0.75rem;"><span style="color: var(--red);">▸</span> Placement: <strong>5th Place — Runner Up</strong></div>
+          <div style="margin-bottom: 0.75rem;"><span style="color: var(--red);">▸</span> Collegiate Level</div>
+          <div><span style="color: var(--red);">▸</span> Araw ng Kagitingan, Bataan</div>
+        </div>
+        <div style="background-color: var(--card-border); padding: 1.25rem; border-radius: 0.25rem; font-size: 1.1rem; margin-bottom: 1.5rem; color: var(--gray-light); line-height: 1.6;">
+          Competed against college-level participants in a provincial history challenge celebrating Araw ng Kagitingan — Day of Valor — in Bataan.
+        </div>
+        <img src="./Stuff I put on my website/BataanHistory.jpg" style="width: 100%; height: auto; margin-bottom: 1.5rem; border: 1px solid var(--card-border); border-radius: 0.25rem;" alt="Bataan History Quiz Bee">
+        
+      </div>
+
+    </div>
+
+    <!-- Full-Width Certificate -->
+    <div style="border: 1px solid var(--card-border); border-radius: 0.5rem; padding: 2.5rem; background-color: var(--card); margin-bottom: 2.5rem; grid-column: 1 / -1;">
+      <h3 style="font-family: var(--display); font-size: 1.6rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--white);">Kernel Panic Certificate</h3>
+      <img src="./Stuff I put on my website/Kibo_Cert.png" style="width: 100%; height: auto; border: 1px solid var(--card-border); border-radius: 0.25rem;" alt="Kernel Panic Certificate">
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── CERTIFICATIONS ─── -->
+<section id="certifications">
+  <p class="section-label">// 05 — Certifications & Hands-On</p>
+  <h2 class="section-title">Verified Work</h2>
+  <div class="section-divider"></div>
+
+  <div class="cert-list">
+
+    <div class="cert-item">
+      <div class="cert-badge">NET</div>
+      <div>
+        <p class="cert-name">Basic Networking Certification</p>
+        <p class="cert-sub">Foundational networking concepts and protocols</p>
+        <img src="./Stuff I put on my website/Certificate_Networking.png" style="width: 100%; height: auto; margin-top: 1rem; border: 1px solid var(--card-border);" alt="Networking Certification">
+      </div>
+    </div>
+
+    <div class="cert-item">
+      <div class="cert-badge">LAN</div>
+      <div>
+        <p class="cert-name">LAN Setup with Switches</p>
+        <p class="cert-sub">Physical network configuration — cables, switches, topology</p>
+        <div class="cert-photo-row">
+          <img src="./Stuff I put on my website/Networking2.jpg" style="width: 100%; height: auto; border: 1px solid var(--card-border);" alt="LAN Setup Photo">
+          <img src="./Stuff I put on my website/Networking3.jpg" style="width: 100%; height: auto; border: 1px solid var(--card-border);" alt="Switch Config Photo">
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── CONTACT / FOOTER ─── -->
+<footer id="contact">
+  <div class="footer-inner">
+    <h2 class="footer-name">Adrian V. <span>Jimenez</span></h2>
+    <p class="footer-sub">IT Student · Bataan Heroes College · Region III</p>
+
+    <div class="footer-wip">&#9679; Portfolio — Work in Progress — More Coming Soon</div>
+
+    <div class="contact-links">
+      <a href="https://github.com/exec16" class="contact-link" target="_blank">
+        &#128279; GitHub
+      </a>
+      <a href="mailto:jjimenezadrian90@gmail.com" class="contact-link">
+        &#9993; Email
+      </a>
+    </div>
+
+    <p class="footer-copy">
+      &copy; 2026 Adrian V. Jimenez &nbsp;·&nbsp; Bataan, Philippines &nbsp;·&nbsp; Deep as the sea I am named after.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
